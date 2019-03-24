@@ -18,20 +18,53 @@ body {
 }
 
 #reels {
+  /* display: flex; */
+  display: -webkit-flex;
   display: flex;
+  position: relative;
   width: 100vw;
-  height: calc((3 / 6) * 100vw);
+  height: calc((3 / 7) * 100vw);
   max-height: calc(90vh - 50px);
-  max-width: calc((6 / 3) * (90vh - 50px));
+  max-width: calc((7 / 3) * (90vh - 50px));
 }
 
 .reel {
+  /* display:absolute; */
   overflow: hidden;
   width: 20%;
   height: 100%;
   border-style:groove;
   border-color: red ;
   border-width: medium;
+  -webkit-flex: 1;
+  flex: 1;
+  z-index: 1;
+}
+
+.top-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 33.3333%;
+  background-color: grey;
+  opacity: 0.7;
+  z-index: 10;
+}
+
+.bottom-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 33.3333%;
+  background-color: grey;
+  opacity: 0.7;
+  z-index: 10;
+}
+
+#spin {
+  width: 20%;
 }
 
 .reel > .icons > img {

@@ -17,8 +17,7 @@ export default class Symbol {
     Symbol.symbols.forEach(symbol => new Symbol(symbol));
   }
 
-  static get symbols() {
-    //return ['at_at', 'c3po', 'darth_vader', 'death_star', 'falcon', 'r2d2', 'stormtrooper', 'tie_ln', 'yoda'];
+  static get symbols() {   
     return ['A', 'D', 'E', 'R', 'N', 'T'];
   }
 

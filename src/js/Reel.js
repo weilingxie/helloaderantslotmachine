@@ -24,16 +24,13 @@ export default class Reel {
 
   get factor() {    
     let factor = 1 + Math.pow(this.idx / 2, 2);
-    console.log(`Idx:${this.idx}    Factor:${factor}`);
     return factor;
   }
 
   renderSymbols(currentSymbols, nextSymbols) {
     const fragment = document.createDocumentFragment();
 
-    for(let i = 3; i < 3 + Math.floor(this.factor) * 10; i++) {
-      console.log('renderSymbols## i:',(i >= 10 * Math.floor(this.factor) - 2 ? nextSymbols[i - Math.floor(this.factor) * 10] : undefined));
-      console.log('icon-i:',)
+    for(let i = 3; i < 3 + Math.floor(this.factor) * 10; i++) {      
       const icon = new Symbol(i >= 10 * Math.floor(this.factor) - 2 ? nextSymbols[i - Math.floor(this.factor) * 10] : undefined);
       fragment.appendChild(icon.img);
     }
