@@ -1,6 +1,6 @@
 import Reel from './Reel.js';
 import Symbol from './Symbol.js';
-import { getResult } from './Utility.js';
+import { getResult,playSound } from './Utility.js';
 
 export default class Slot {
   constructor(domElement, config = {}) {
@@ -16,11 +16,8 @@ export default class Slot {
       ['T', 'T', 'T'],
     ];
 
+    // Initial Parameters
     this.balance = 100;
-    document.getElementById('value').innerHTML = this.balance;
-    this.cnt = 0;
-
-    this.cheat = null;
 
     this.result = [];
 
@@ -33,29 +30,55 @@ export default class Slot {
     this.spinButton = document.getElementById('spin');
     this.spinButton.addEventListener('click', () => this.spin());
 
-    this.autoPlayCheckbox = document.getElementById('autoplay');
+    this.autoPlayCheckbox = document.getElementById('autoplay');    
 
     if (config.inverted) {
       this.container.classList.add('inverted');
     } 
+
+    //Cheating
+    this.allthesame = false;
+    this.bigwin = false;
+
+    this.hello = document.getElementById('hello');
+    this.hello.addEventListener('click', () => this.handleHello());
+    this.aderant = document.getElementById('aderant');
+    this.aderant.addEventListener('click', () => this.handleAderant());
+    
+    // Set initial balance
+    document.getElementById('value').innerHTML = this.balance;
+  }
+
+  handleHello() {
+     this.allthesame = true;
+     this.bigwin = false;
+  }
+
+  handleAderant() {
+    this.bigwin = true;
+    this.allthesame = false;
   }
 
   spin() {
-    this.cnt +=1;
-    console.log('cnt:',this.cnt);
+
     this.onSpinStart();
     this.result = [];
     this.currentSymbols = this.nextSymbols;
-    this.mod = this.cnt%5;
-    this.cheat = Symbol.random();
+
+    console.log('bigwin:',this.bigwin);
+    console.log('allthesame:',this.allthesame);
     //Generate result
-    if(this.mod==0){
-      for (let i = 0; i < 7; i++) {     
+    if (this.allthesame){
+      console.log('allthesame');
+      for (let i = 0; i < 7; i++) {
         this.result.push(this.cheat);
       }
     }
+    else if (this.bigwin) {
+      console.log('bigwin');
+      this.result = ['A','D','E','R','A','N','T'];
+    }
     else{
-      console.log('normal');
       for (let i = 0; i < 7; i++) {      
         this.result.push(Symbol.random());
       }
@@ -72,6 +95,9 @@ export default class Slot {
     // console.log('nextSymbols');
     // console.log(this.nextSymbols);
 
+    // Play sound
+    playSound('Spin');
+
     return Promise.all(this.reels.map(reel => {
       reel.renderSymbols(this.currentSymbols[reel.idx], this.nextSymbols[reel.idx]);
       return reel.spin();
@@ -81,6 +107,7 @@ export default class Slot {
   onSpinStart() {
     this.spinButton.disabled = true;
     this.balance = this.balance -1;
+    document.getElementById('value').innerHTML = this.balance;    
   }
 
   onSpinEnd() {
@@ -88,6 +115,10 @@ export default class Slot {
     this.balance = getResult(this.result, this.balance);
     document.getElementById('value').innerHTML = this.balance;
 
-    if (this.autoPlayCheckbox.checked) return window.setTimeout(() => this.spin(), 200);
+    if (this.autoPlayCheckbox.checked) 
+      return window.setTimeout(() => this.spin(), 200);
+
+    this.allthesame = false;
+    this.bigwin = false;
   }
 }
