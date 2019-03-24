@@ -1,6 +1,6 @@
 import Reel from './Reel.js';
 import Symbol from './Symbol.js';
-import { countRepeatedChar } from './Utility.js';
+import { getResult } from './Utility.js';
 
 export default class Slot {
   constructor(domElement, config = {}) {
@@ -15,6 +15,12 @@ export default class Slot {
       ['N', 'N', 'N'],
       ['T', 'T', 'T'],
     ];
+
+    this.balance = 100;
+    document.getElementById('balance').innerHTML = 'Balance:' + this.balance;
+    this.cnt = 0;
+
+    this.cheat = null;
 
     this.result = [];
 
@@ -35,14 +41,26 @@ export default class Slot {
   }
 
   spin() {
+    this.cnt +=1;
+    console.log('cnt:',this.cnt);
     this.onSpinStart();
     this.result = [];
     this.currentSymbols = this.nextSymbols;
-
+    this.mod = this.cnt%5;
+    this.cheat = Symbol.random();
     //Generate result
-    for (let i = 0; i < 7; i++) { 
-      this.result.push(Symbol.random());
+    if(this.mod==0){
+      for (let i = 0; i < 7; i++) {     
+        this.result.push(this.cheat);
+      }
     }
+    else{
+      console.log('normal');
+      for (let i = 0; i < 7; i++) {      
+        this.result.push(Symbol.random());
+      }
+    }
+  
     console.log('result:');
     console.log(this.result);
 
@@ -51,8 +69,8 @@ export default class Slot {
       let column = [Symbol.random(), symbol, Symbol.random()];
       this.nextSymbols.push(column);    
     });
-    console.log('nextSymbols');
-    console.log(this.nextSymbols);
+    // console.log('nextSymbols');
+    // console.log(this.nextSymbols);
 
     return Promise.all(this.reels.map(reel => {
       reel.renderSymbols(this.currentSymbols[reel.idx], this.nextSymbols[reel.idx]);
@@ -62,15 +80,13 @@ export default class Slot {
 
   onSpinStart() {
     this.spinButton.disabled = true;
-
-    console.log('SPIN START');
+    this.balance = this.balance -1;
   }
 
   onSpinEnd() {
     this.spinButton.disabled = false;
-    alert(countRepeatedChar(this.result));
-    
-    console.log('SPIN END');
+    this.balance = getResult(this.result, this.balance);
+    document.getElementById('balance').innerHTML = 'Balance:' + this.balance;
 
     if (this.autoPlayCheckbox.checked) return window.setTimeout(() => this.spin(), 200);
   }

@@ -14,7 +14,7 @@ export default class Reel {
       { filter: 'blur(2px)', offset: 0.5 },
       { transform: `translateY(-${((Math.floor(this.factor) * 10) / (3 + Math.floor(this.factor) * 10)) * 100}%)`, filter: 'blur(0)' },
     ], {
-      duration: this.factor * 1000,
+      duration: this.factor * 300,
       easing: 'ease-in-out',
     });
     this.animation.cancel();
