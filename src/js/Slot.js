@@ -17,7 +17,7 @@ export default class Slot {
     ];
 
     this.balance = 100;
-    document.getElementById('balance').innerHTML = 'Balance:' + this.balance;
+    document.getElementById('value').innerHTML = this.balance;
     this.cnt = 0;
 
     this.cheat = null;
@@ -86,7 +86,7 @@ export default class Slot {
   onSpinEnd() {
     this.spinButton.disabled = false;
     this.balance = getResult(this.result, this.balance);
-    document.getElementById('balance').innerHTML = 'Balance:' + this.balance;
+    document.getElementById('value').innerHTML = this.balance;
 
     if (this.autoPlayCheckbox.checked) return window.setTimeout(() => this.spin(), 200);
   }
