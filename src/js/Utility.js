@@ -1,16 +1,12 @@
 const countRepeatedChar = (original) => {
-    //console.log(original);
     let prevChar = null;
     let currentCount = 1;
     let maxCount = 1;
 
-    original.forEach((x) => {
-        //console.log(`x=${x}   prevChar=${prevChar}  currentCount=${currentCount}    maxCount=${maxCount}`);
-        
+    original.forEach((x) => {        
         if (currentCount !== null && prevChar !== null && prevChar === x){
             
             currentCount = currentCount + 1;
-            //console.log(`Equal   currentCount=${currentCount}`);
             if (currentCount > maxCount)
                 maxCount = currentCount;
         }
@@ -70,8 +66,7 @@ const setEffect =  (type) => {
         });
         //sound
         playSound(type);
-    }
-    
+    }   
 }
 
 const getResult = (original, balance) => {
@@ -91,18 +86,7 @@ const getResult = (original, balance) => {
         reward = calculateReward(repeatedChar);
         type = "Reward";
     }
-    // If there is a reward, start flashing for 5 seconds
-    // if (reward > 0){
-    //     $(document).ready(function() {
-    //         var f = document.getElementById('reels');
-    //         //Start flashing
-    //         var interval = setInterval(function() {
-    //             f.style.border = (f.style.border == "" ? "5px dotted yellow" : "");
-    //         }, 100);
-    //         //Stop flashing
-    //         setTimeout(function() {clearInterval(interval)},3000);
-    //     });
-    // }
+
     setEffect(type);
     return balance + reward;
 }
@@ -123,13 +107,9 @@ function sound(src) {
   }
 
 const playSound = (type) => {
-    console.log(window.location.path);
     let name = `sounds/${type}.wav`;
-    // let audio = new Audio(name);
-
     let audio = new sound(name);
     audio.play();
-
 }
 
 export { getResult, playSound }

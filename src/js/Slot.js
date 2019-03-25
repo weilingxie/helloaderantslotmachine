@@ -19,6 +19,8 @@ export default class Slot {
     // Initial Parameters
     this.balance = 100;
 
+    this.cheat = null;
+
     this.result = [];
 
     this.nextSymbols = [];
@@ -52,11 +54,13 @@ export default class Slot {
   handleHello() {
      this.allthesame = true;
      this.bigwin = false;
+     console.log('STOP CHEATING!!!');
   }
 
   handleAderant() {
     this.bigwin = true;
     this.allthesame = false;
+    console.log('YOU ARE DISHONEEST!!!');
   }
 
   spin() {
@@ -65,17 +69,18 @@ export default class Slot {
     this.result = [];
     this.currentSymbols = this.nextSymbols;
 
-    console.log('bigwin:',this.bigwin);
-    console.log('allthesame:',this.allthesame);
+    // console.log('bigwin:',this.bigwin);
+    // console.log('allthesame:',this.allthesame);
     //Generate result
     if (this.allthesame){
-      console.log('allthesame');
+      // console.log('allthesame');
+      this.cheat = Symbol.random();
       for (let i = 0; i < 7; i++) {
         this.result.push(this.cheat);
       }
     }
     else if (this.bigwin) {
-      console.log('bigwin');
+      // console.log('bigwin');
       this.result = ['A','D','E','R','A','N','T'];
     }
     else{
@@ -84,8 +89,8 @@ export default class Slot {
       }
     }
   
-    console.log('result:');
-    console.log(this.result);
+    // console.log('result:');
+    // console.log(this.result);
 
     this.nextSymbols = [];
     this.result.forEach((symbol)=>{
