@@ -103,7 +103,7 @@ const getResult = (original, balance, betAmount) => {
 
     setEffect(type);
     //console.log(`Blance = ${balance}   Reward = ${reward}   cntRepeatedChar = ${cntRepeatedChar}  betAmount = ${betAmount} `);
-
+    balance = balance + reward;
     return {balance,reward};
 }
 

@@ -1,5 +1,5 @@
 # Hello Aderant Slot Machine
-Hello World Application for Graduate Training Programme. Base on johakr/html5-slot-machine.
+Hello World Application for Graduate Training Programme. Base on johakr/html5-slot-machine on Github.
 
 ## Features
 * Spin: Initially you are given $100, each spin cost $1
