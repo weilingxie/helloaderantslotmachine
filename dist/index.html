@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello Aderant Slotmachine</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.min.css" integrity="sha256-dARYuC3pd0wa/7R4Hkt/sR2zfLHCgbnVAQ2sPwhNe0A=" crossorigin="anonymous" /> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+  </head>
+  <body>
+    <div id="slot">
+      <div id="title-container">
+        <div class="ha" id="hello">Hello</div><div class="ha" id="aderant">Aderant</div>
+      </div>
+      <div id="reels">
+        <div class="top-bg"></div>
+        <div class="bottom-bg"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+      </div>
+      <div id="controls">
+        <button type="button" class="btn btn-primary" id="spin">SPIN</button>
+        <button class="btn btn-success" id="balance" disabled>BALANCE: <span id="value"></span></button>
+        <button class="btn btn-danger" id="withdraw">WITHDRAW</button>
+        <div class="input-group mb-3 bet-container">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="bet" name="bet" value="1"> 
+          </div>
+        <label class="btn btn-info" >
+          <input type="checkbox" name="autoplay" id="autoplay">
+          Autoplay
+        </label>
+    </div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default%2CWebAnimations"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="bundle.js"></script></body>
+</html>
