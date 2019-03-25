@@ -35,6 +35,9 @@ export default class Slot {
     this.withdrawButton = document.getElementById('withdraw');
     this.withdrawButton.addEventListener('click', () => this.handleWithdraw());
 
+    this.payButton = document.getElementById('pay');
+    this.payButton.addEventListener('click', () => this.handlePay());
+
     this.betInput = document.getElementById('bet');
     this.betAmount = this.betInput.value;
 
@@ -54,7 +57,8 @@ export default class Slot {
     this.aderant.addEventListener('click', () => this.handleAderant());
     
     // Set initial balance
-    document.getElementById('value').innerHTML = this.balance;
+    document.getElementById('value').innerHTML = this.balance;    
+
   }
 
   handleHello() {
@@ -76,55 +80,72 @@ export default class Slot {
       alert(`Poor you, there is $0 balance!`);
   }
 
+  handlePay() {
+      let cardNumber = document.getElementById('cardNumber').value;
+      let expireDate = document.getElementById('expireDate').value;
+      let ccv = document.getElementById('cvv').value;
+      let name = document.getElementById('name').value;
+      let amount = document.getElementById('amount').value||0;
+      if (cardNumber&&expireDate&&ccv&name&&(amount>0))
+        alert(`Please pay the amount to William`);
+      else
+        alert(`Please fill in all fields to finish paying`);
+      this.balance = 100;
+  }
+
   spin() {
+    this.betAmount = document.getElementById('bet').value;
+    if(this.betAmount > this.balance){
+      alert("Sorry, you don`t have enough balance");
+    }
+    else {
+      this.onSpinStart();
+      this.result = [];
+      this.currentSymbols = this.nextSymbols;
 
-    this.onSpinStart();
-    this.result = [];
-    this.currentSymbols = this.nextSymbols;
-
-    // console.log('bigwin:',this.bigwin);
-    // console.log('allthesame:',this.allthesame);
-    //Generate result
-    if (this.allthesame){
-      // console.log('allthesame');
-      this.cheat = Symbol.random();
-      for (let i = 0; i < 7; i++) {
-        this.result.push(this.cheat);
+      // console.log('bigwin:',this.bigwin);
+      // console.log('allthesame:',this.allthesame);
+      //Generate result
+      if (this.allthesame){
+        // console.log('allthesame');
+        this.cheat = Symbol.random();
+        for (let i = 0; i < 7; i++) {
+          this.result.push(this.cheat);
+        }
       }
-    }
-    else if (this.bigwin) {
-      // console.log('bigwin');
-      this.result = ['A','D','E','R','A','N','T'];
-    }
-    else{
-      for (let i = 0; i < 7; i++) {      
-        this.result.push(Symbol.random());
+      else if (this.bigwin) {
+        // console.log('bigwin');
+        this.result = ['A','D','E','R','A','N','T'];
       }
-    }
-  
-    // console.log('result:');
-    // console.log(this.result);
+      else{
+        for (let i = 0; i < 7; i++) {      
+          this.result.push(Symbol.random());
+        }
+      }
+    
+      // console.log('result:');
+      // console.log(this.result);
 
-    this.nextSymbols = [];
-    this.result.forEach((symbol)=>{
-      let column = [Symbol.random(), symbol, Symbol.random()];
-      this.nextSymbols.push(column);    
-    });
-    // console.log('nextSymbols');
-    // console.log(this.nextSymbols);
+      this.nextSymbols = [];
+      this.result.forEach((symbol)=>{
+        let column = [Symbol.random(), symbol, Symbol.random()];
+        this.nextSymbols.push(column);    
+      });
+      // console.log('nextSymbols');
+      // console.log(this.nextSymbols);
 
-    // Play sound
-    playSound('Spin');
+      // Play sound
+      playSound('Spin');
 
-    return Promise.all(this.reels.map(reel => {
-      reel.renderSymbols(this.currentSymbols[reel.idx], this.nextSymbols[reel.idx]);
-      return reel.spin();
-    })).then(() => this.onSpinEnd());
+      return Promise.all(this.reels.map(reel => {
+        reel.renderSymbols(this.currentSymbols[reel.idx], this.nextSymbols[reel.idx]);
+        return reel.spin();
+      })).then(() => this.onSpinEnd());
+    }    
   }
 
   onSpinStart() {
-    this.spinButton.disabled = true;
-    this.betAmount = document.getElementById('bet').value;
+    this.spinButton.disabled = true;    
     this.balance = this.balance -this.betAmount;
     document.getElementById('value').innerHTML = this.balance;    
   }
