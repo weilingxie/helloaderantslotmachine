@@ -12,11 +12,6 @@
       <div id="title-container">
         <div class="ha" id="hello">Hello</div><div class="ha" id="aderant">Aderant</div>
       </div>
-      <!-- <div>
-        <audio id="myAudio" control>
-          <source src='Spin.wav' type="audio/wav">
-        </audio>
-    </div> -->
       <div id="reels">
         <div class="top-bg"></div>
         <div class="bottom-bg"></div>
@@ -31,6 +26,13 @@
       <div id="controls">
         <button type="button" class="btn btn-primary" id="spin">SPIN</button>
         <button class="btn btn-success" id="balance" disabled>BALANCE: <span id="value"></span></button>
+        <button class="btn btn-danger" id="withdraw">WITHDRAW</button>
+        <div class="input-group mb-3 bet-container">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="bet" name="bet" value="1"> 
+          </div>
         <label class="btn btn-info" >
           <input type="checkbox" name="autoplay" id="autoplay">
           Autoplay

@@ -18,7 +18,19 @@ const countRepeatedChar = (original) => {
     return maxCount;
 }
 
-const calculateReward = (repeatedChar) => Math.pow(2,(repeatedChar-3))*10;
+const countAderant = (original) => {
+    let aderant = 'ADERANT';
+    let maxCount = 0;
+    original.forEach((x,idx) => {        
+        if (aderant[idx]  === x){
+            maxCount ++;
+        }
+    });    
+    
+    return maxCount;
+}
+
+const calculateReward = (repeatedChar, betAmount) => Math.pow(2,(repeatedChar-2))*betAmount;
 
 const setEffect =  (type) => {
     if (type==="Bigwin"){
@@ -69,26 +81,30 @@ const setEffect =  (type) => {
     }   
 }
 
-const getResult = (original, balance) => {
+const getResult = (original, balance, betAmount) => {
     let reward = 0;
     let repeatedChar = 1;
     let type = 'normal';
-    repeatedChar = countRepeatedChar(original);
+    let cntRepeatedChar = countRepeatedChar(original);
+    let cntAderant = countAderant(original);
+    repeatedChar = cntRepeatedChar > cntAderant ? cntRepeatedChar : cntAderant;
     if (original.join('') === 'ADERANT'){
-        reward = 9999;
+        reward = 9999*betAmount;
         type = 'Bigwin';
     }
     else if (repeatedChar === 7){
-        reward = calculateReward(repeatedChar);
+        reward = calculateReward(repeatedChar, betAmount);
         type = "Allthesame";
     }
-    else if (repeatedChar > 2) {        
-        reward = calculateReward(repeatedChar);
+    else if (repeatedChar >= 2) {        
+        reward = calculateReward(repeatedChar, betAmount);
         type = "Reward";
     }
 
     setEffect(type);
-    return balance + reward;
+    //console.log(`Blance = ${balance}   Reward = ${reward}   cntRepeatedChar = ${cntRepeatedChar}  betAmount = ${betAmount} `);
+
+    return {balance,reward};
 }
 
 function sound(src) {

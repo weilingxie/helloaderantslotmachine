@@ -32,6 +32,12 @@ export default class Slot {
     this.spinButton = document.getElementById('spin');
     this.spinButton.addEventListener('click', () => this.spin());
 
+    this.withdrawButton = document.getElementById('withdraw');
+    this.withdrawButton.addEventListener('click', () => this.handleWithdraw());
+
+    this.betInput = document.getElementById('bet');
+    this.betAmount = this.betInput.value;
+
     this.autoPlayCheckbox = document.getElementById('autoplay');    
 
     if (config.inverted) {
@@ -61,6 +67,13 @@ export default class Slot {
     this.bigwin = true;
     this.allthesame = false;
     console.log('YOU ARE DISHONEEST!!!');
+  }
+
+  handleWithdraw() {
+    if(this.balance > 0)
+      alert(`Congratulations! You have $${this.balance}. Please contact George to withdraw.`);
+    else
+      alert(`Poor you, there is $0 balance!`);
   }
 
   spin() {
@@ -111,14 +124,16 @@ export default class Slot {
 
   onSpinStart() {
     this.spinButton.disabled = true;
-    this.balance = this.balance -1;
+    this.betAmount = document.getElementById('bet').value;
+    this.balance = this.balance -this.betAmount;
     document.getElementById('value').innerHTML = this.balance;    
   }
 
   onSpinEnd() {
     this.spinButton.disabled = false;
-    this.balance = getResult(this.result, this.balance);
-    document.getElementById('value').innerHTML = this.balance;
+    let result = getResult(this.result, this.balance, this.betAmount);
+    this.balance = result.balance;
+    document.getElementById('value').innerHTML = `$${this.balance} (+${result.reward ? result.reward : 0})`;
 
     if (this.autoPlayCheckbox.checked) 
       return window.setTimeout(() => this.spin(), 200);
